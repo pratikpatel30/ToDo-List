@@ -3,6 +3,8 @@ const addBtn = document.getElementById('addBtn');
 const todoList = document.getElementById('todoList');
 
 
+
+
 const addTodo = ()=>{
     const inputText = inputBox.value.trim();
     if(inputText.length <= 0){
@@ -20,15 +22,23 @@ const addTodo = ()=>{
     // after we want to black input box
     inputBox.value = "";
 
-    //Create delete button
-      const deleteBtn = document.createElement("button");
-      deleteBtn.innerText = "Remove";
-      li.appendChild(deleteBtn);
-
     //create edit button
     const editBtn = document.createElement("button");
     editBtn.innerText = "Edit";
+    editBtn.classList.add("btn", "editBtn");
     li.appendChild(editBtn);
 
+    //Create delete button
+      const deleteBtn = document.createElement("button");
+      deleteBtn.innerText = "Remove";
+      deleteBtn.classList.add("btn", "deleteBtn");// add class for accees in css
+      li.appendChild(deleteBtn);
+
+    
+
 }
-addBtn.addEventListener('click', addTodo);
+
+
+
+
+addBtn.addEventListener('click', addTodo);//run when click on add
