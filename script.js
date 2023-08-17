@@ -5,7 +5,7 @@ const todoList = document.getElementById('todoList');
 //make one global variable
 let editTodo = null;
 
-//functionality in add button
+//Function to add to do 
 const addTodo = ()=>{
     const inputText = inputBox.value.trim();
     if(inputText.length <= 0){
@@ -30,6 +30,9 @@ const addTodo = ()=>{
     todoList.appendChild(li);
     // after we want to black input box
     inputBox.value = "";
+
+    //which data we sae in input text that save in local storage
+    saveLocalTodos(inputText);
         
 
     //create edit button
@@ -44,12 +47,14 @@ const addTodo = ()=>{
       deleteBtn.classList.add("btn", "deleteBtn");// add class for accees in css
       li.appendChild(deleteBtn);
 
+      
+
     }
 
 }
 
 
-// add functionality in edit  and delete button 
+// Function to update(Edit / Delete ) to do 
 const updateTodo = (e)=>{  
     // for remove/delete 
     //console.log(e.target.innerHTML);// print inner value when we click on button
@@ -67,6 +72,26 @@ const updateTodo = (e)=>{
     }
 }
 
+//we want to store data in local storage
+//function to save data
+const saveLocalTodos = (todo) => {
+    let todos = [];
+    // console.log(localStorage.getItem("todos"));
+    // console.log(JSON.parse(localStorage.getItem("todos")));
+
+    if(localStorage.getItem("todos") === null){
+        todos = [];
+    }
+    else{
+    todos = JSON.parse(localStorage.getItem("todos"));//convert json string to json object
+    }
+    todos.push(todo);
+    localStorage.setItem("todos", JSON.stringify(todos));// json is convert object in to string, local storage store defaut as a object
+    // console.log(todos);
+
+}
+
+//
 
 addBtn.addEventListener('click', addTodo);//run when click on add
 todoList.addEventListener('click', updateTodo)// run when click on edit delete
