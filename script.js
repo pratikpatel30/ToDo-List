@@ -14,6 +14,8 @@ const addTodo = () => {
     }
 
     if (addBtn.value === "Edit") {
+        // Passing the original text to editLocalTodos function before edit it in the todoList
+        editLocalTodos(editTodo.target.previousElementSibling.innerHTML);
         editTodo.target.previousElementSibling.innerHTML = inputText;
         addBtn.value = "Add";
         inputBox.value = "";
@@ -144,6 +146,15 @@ const deleteLocalTodos = (todo) =>{
     console.log(todoIndex);
 
 }
+
+//function to edit data from local storage
+const editLocalTodos = (todo) => {
+    let todos = JSON.parse(localStorage.getItem("todos"));
+    let todoIndex = todos.indexOf(todo);
+    todos[todoIndex] = inputBox.value;
+    localStorage.setItem("todos", JSON.stringify(todos));
+}
+
 document.addEventListener('DOMContentLoaded', getLocalTodos); // run when load full page after run this function
 addBtn.addEventListener('click', addTodo);//run when click on add
 todoList.addEventListener('click', updateTodo)// run when click on edit delete
