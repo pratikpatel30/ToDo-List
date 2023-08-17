@@ -53,7 +53,6 @@ const addTodo = () => {
 
 }
 
-
 // Function to update(Edit / Delete ) to do 
 const updateTodo = (e) => {
     // for remove/delete 
@@ -61,6 +60,7 @@ const updateTodo = (e) => {
     if (e.target.innerHTML === "Remove") {
         //console.log(e.target.parentElement);
         todoList.removeChild(e.target.parentElement);//remove entered value
+        deleteLocalTodos(e.target.parentElement);
     }
 
     // for edit 
@@ -92,6 +92,7 @@ const saveLocalTodos = (todo) => {
 }
 
 //get data from local storage 
+//function to get data
 const getLocalTodos = () => {
     let todos = [];
     if (localStorage.getItem("todos") === null) {
@@ -123,6 +124,26 @@ const getLocalTodos = () => {
     }
 }
 
+//function to delete data from local storage
+const deleteLocalTodos = (todo) =>{
+    let todos;
+    if (localStorage.getItem("todos") === null) {
+        todos = [];
+    }
+    else {
+        todos = JSON.parse(localStorage.getItem("todos"));//convert json string to json object
+    }
+
+    let todoText = todo.children[0].innerHTML;
+    let todoIndex = todos.indexOf(todoText);
+    //for delete
+    //slice function don't manupulate orignal array it is create new array than change the array
+    //splice is direct change in orignal array
+    todos.splice(todoIndex, 1);
+    localStorage.setItem("todos", JSON.stringify(todos));//stringify convert object or array into string
+    console.log(todoIndex);
+
+}
 document.addEventListener('DOMContentLoaded', getLocalTodos); // run when load full page after run this function
 addBtn.addEventListener('click', addTodo);//run when click on add
 todoList.addEventListener('click', updateTodo)// run when click on edit delete
